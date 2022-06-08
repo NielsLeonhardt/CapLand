@@ -471,16 +471,23 @@ MonoBehaviour:
     m_InternalValue: 0
   networkCurrentTroopAmount:
     m_InternalValue: 0
+  isAttacking: 0
+  isUnderAttack: 0
+  stopSendingTroops: 0
   landToVisit: {fileID: 0}
   troopAmountText: {fileID: 2036601429328957449}
   landType: 2
-  materials: []
+  materials:
+  - {fileID: 2100000, guid: 4601735c698e44c47a89714fbde413a7, type: 2}
+  - {fileID: 2100000, guid: 754a061bea50944b9a63cb659d46dfac, type: 2}
+  - {fileID: 2100000, guid: 32c6e75fd2c7944d9a4a5ed25176b618, type: 2}
   troop1PlaceholderGO: {fileID: 1421368057961380965}
   troop2PlaceholderGO: {fileID: 610796141434382641}
   troop3PlaceholderGO: {fileID: 8276147314059516876}
   troop4PlaceholderGO: {fileID: 8593453209173531153}
   troop5PlaceholderGO: {fileID: 3165785854936415223}
   troopPrefab: {fileID: 457513291740271167, guid: d00b93405407d49ca91c5ff2de4b4110, type: 3}
+  tTimer: 0
 --- !u!1 &2036601430786779223
 GameObject:
   m_ObjectHideFlags: 0

@@ -84,7 +84,6 @@ public class MultiplayerLand2 : NetworkBehaviour
     }
 
     void Update(){
-        CheckIfTroopLimitReachedServerRpc();
         ClientInput();
         UpdateAmountText();
     }
@@ -171,7 +170,7 @@ public class MultiplayerLand2 : NetworkBehaviour
         if(isUnderAttack || isAttacking){ return; }
         networkCurrentTroopAmount.Value++;
 
-        // CheckIfTroopLimitReached();
+        CheckIfTroopLimitReached();
         //UI STUFF
         UpdateAmountText();
     }
@@ -179,14 +178,12 @@ public class MultiplayerLand2 : NetworkBehaviour
     void TroopAmountIncreaseCombatHandler(){
         networkCurrentTroopAmount.Value++;
         //CHECK
-        // CheckIfTroopLimitReached();
+        CheckIfTroopLimitReached();
         //UI STUFF
         UpdateAmountText();
     }
 
-    [ServerRpc(RequireOwnership = false)] //server owns this object but client can request a spawn
-
-    void CheckIfTroopLimitReachedServerRpc(){
+    void CheckIfTroopLimitReached(){
         if(networkCurrentTroopAmount.Value > maxTroopAmount){
             networkCurrentTroopAmount.Value = maxTroopAmount;
         }

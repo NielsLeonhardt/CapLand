@@ -656,10 +656,16 @@ MonoBehaviour:
     m_InternalValue: 0
   networkCurrentTroopAmount:
     m_InternalValue: 0
+  isAttacking: 0
+  isUnderAttack: 0
+  stopSendingTroops: 0
   landToVisit: {fileID: 0}
   troopAmountText: {fileID: 2286873827085158201}
   landType: 3
-  materials: []
+  materials:
+  - {fileID: 2100000, guid: 4601735c698e44c47a89714fbde413a7, type: 2}
+  - {fileID: 2100000, guid: 754a061bea50944b9a63cb659d46dfac, type: 2}
+  - {fileID: 2100000, guid: 32c6e75fd2c7944d9a4a5ed25176b618, type: 2}
   troop1PlaceholderGO: {fileID: 1172724960878652245}
   troop2PlaceholderGO: {fileID: 830375707536801281}
   troop3PlaceholderGO: {fileID: 8152964166973000956}
