@@ -55,10 +55,13 @@ public class PlayerManager : NetworkBehaviour
 
     public void SpawnTestObject(){
         if(IsServer){
-            GameObject go = Instantiate(myPrefab, new Vector3(0,0,0), Quaternion.identity);
-            // go.GetComponent<NetworkObject>().RemoveOwnership();
+            GameObject go = Instantiate(myPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             go.GetComponent<NetworkObject>().Spawn();
-            // go.GetComponent<NetworkObject>().RemoveOwnership();
+
+            GameObject go2 = Instantiate(myPrefab, new Vector3(0, -2, 0), Quaternion.identity);
+            // go2.GetComponent<NetworkObject>().ChangeOwnership(7);
+            go2.GetComponent<NetworkObject>().Spawn();
+
         }
     }
 

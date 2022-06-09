@@ -31,7 +31,7 @@ public class GameManager : NetworkBehaviour{
         }
 
         //SELECT LAND AS CLIENT
-        if(selectedLand == null && NetworkManager.Singleton.LocalClientId == 1 && IsClient && scriptFromObjectUserClickedOn.networkLandOwner.Value == MultiplayerLand2.LandOwner.PLAYER2){
+        if(selectedLand == null && NetworkManager.Singleton.LocalClientId == 2 && IsClient && scriptFromObjectUserClickedOn.networkLandOwner.Value == MultiplayerLand2.LandOwner.PLAYER2){
 
             Debug.Log("CLIENT Land SELECTED");
             selectedLand = scriptFromObjectUserClickedOn;

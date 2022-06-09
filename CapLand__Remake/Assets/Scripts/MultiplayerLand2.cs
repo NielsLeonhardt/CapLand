@@ -17,12 +17,12 @@ public class MultiplayerLand2 : NetworkBehaviour
         BIG_COUNTRY,
         LARGE_COUNTRY  
     }
-
-    public NetworkVariable<LandOwner> networkLandOwner = new NetworkVariable<LandOwner>();
+    
+    public NetworkVariable<LandOwner> networkLandOwner = new NetworkVariable<LandOwner>(default, NetworkVariableBase.DefaultReadPerm, NetworkVariableWritePermission.Owner);
 
     [SerializeField] NetworkVariable<bool> networkIsUnderAttack = new NetworkVariable<bool>();
     [SerializeField] NetworkVariable<bool> networkIsAttacking = new NetworkVariable<bool>();
-    [SerializeField] NetworkVariable<int> networkCurrentTroopAmount = new NetworkVariable<int>();
+    [SerializeField] NetworkVariable<int> networkCurrentTroopAmount = new NetworkVariable<int>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     GameManager gameManagerScript;
 
@@ -57,11 +57,8 @@ public class MultiplayerLand2 : NetworkBehaviour
     bool oldIsAttacking;
     bool oldIsUnderAttack;
 
-
-
     // [SerializeField] Vector2 defaultInitialPosition = new Vector2(-7, 5);
-
-
+ 
     void Awake(){
         // ownMaterial = GetComponent<Renderer>().material;
         gameManagerScript = FindObjectOfType<GameManager>();
@@ -84,7 +81,12 @@ public class MultiplayerLand2 : NetworkBehaviour
     }
 
     void Update(){
-        ClientInput();
+        if(IsLocalPlayer){
+            ClientInput();
+        }
+
+        TriggerResetTimer();
+        CheckForEnemyAttackHandler();
         UpdateAmountText();
     }
 
@@ -228,11 +230,12 @@ public class MultiplayerLand2 : NetworkBehaviour
             {  
                 if(networkCurrentTroopAmount.Value <= minTroopAmount){
                     stopSendingTroops = true;
+                    isAttacking = false;
                     break;}
 
-                Vector3 spawnPosGO = new Vector3(0, 0, 0);
-                    if(isAttacking){
-                        for (int u = 1; u < 5; u++){
+                Vector3 spawnPosGO = troop1PlaceholderGO.transform.position;
+                    if(isAttacking && IsServer){
+                        for (int u = 0; u < 5; u++){
                             switch (u){
                                 case 1: 
                                     spawnPosGO = troop1PlaceholderGO.transform.position;
@@ -259,7 +262,7 @@ public class MultiplayerLand2 : NetworkBehaviour
                             }
                             networkCurrentTroopAmount.Value--;
                             GameObject troop = Instantiate(troopPrefab, spawnPosGO, transform.rotation);
-                            troop.GetComponent<NetworkObject>().Spawn();
+                            troop.GetComponent<NetworkObject>().SpawnAsPlayerObject(NetworkManager.Singleton.LocalClientId);
                             // troop.GetComponent<NetworkObject>().RemoveOwnership();
                             troop.GetComponent<Troop>().SetTroop(landToVisit, this, GetComponent<SpriteRenderer>().material);
                         }
@@ -287,9 +290,9 @@ public class MultiplayerLand2 : NetworkBehaviour
         }
     }
 
-    // void TriggerResetTimer(){
-    //     tTimer += Time.deltaTime;
-    // }
+    void TriggerResetTimer(){
+        tTimer += Time.deltaTime;
+    }
 
     public void HandleSendingTroop(){
         if(networkCurrentTroopAmount.Value <= minTroopAmount/* || stopSendingTroops*/){

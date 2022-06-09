@@ -476,7 +476,7 @@ MonoBehaviour:
   stopSendingTroops: 0
   landToVisit: {fileID: 0}
   troopAmountText: {fileID: 2036601429328957449}
-  landType: 2
+  landType: 0
   materials:
   - {fileID: 2100000, guid: 4601735c698e44c47a89714fbde413a7, type: 2}
   - {fileID: 2100000, guid: 754a061bea50944b9a63cb659d46dfac, type: 2}
